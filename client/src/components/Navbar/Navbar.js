@@ -25,7 +25,7 @@ export default function Navbar() {
                         component='div'
                         sx={{ flexGrow: 1 }}
                     >
-                        {user}
+                        {user.toUpperCase()}
                     </Typography>
                 </Stack>
             </Toolbar>

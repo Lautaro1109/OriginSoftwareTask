@@ -1,0 +1,23 @@
+.detail-container {
+    background-color: #f5f6fa;
+    min-height: 100vh;
+}
+
+.detail-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card {
+    width: 75%;
+}
+
+.detail-header-title {
+    align-self: center;
+}
+
+.detail-action {
+    display: flex;
+    justify-content: space-between;
+}

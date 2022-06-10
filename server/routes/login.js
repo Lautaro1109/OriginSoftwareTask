@@ -17,7 +17,6 @@ routes.post('/', async (req, res) => {
         [username],
         (err, result) => {
             if (err) {
-                console.log(err)
                 return res.status(500).json({
                     message: 'Error al realizar la consulta'
                 })

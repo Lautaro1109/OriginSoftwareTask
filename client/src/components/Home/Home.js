@@ -29,7 +29,6 @@ export default function Home() {
                 username,
                 password
             })
-            console.log(user)
 
             window.localStorage.setItem('loggedUser', JSON.stringify(user))
 

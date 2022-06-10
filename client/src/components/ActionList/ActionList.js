@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
 
 import './ActionList.css'
 
-import DeleteIcon from '@mui/icons-material/Delete'
 import {
     Button,
     TextField,
@@ -16,35 +14,33 @@ import {
     IconButton
 } from '@mui/material'
 
-import { getSymbolData, addSymbol, getSymbols } from '../../services/symbol'
+import {
+    getSymbolData,
+    addSymbol,
+    getSymbols,
+    setToken,
+    deleteSymbol
+} from '../../services/symbol'
+
+import DeleteIcon from '@mui/icons-material/Delete'
+import { Link } from 'react-router-dom'
 
 export default function ActionList() {
     const [optionsData, setOptionsData] = useState([])
-    const [symbolData, setSymbolData] = useState('')
+    const [symbolData, setSymbolData] = useState(null)
     const [symbolList, setSymbolList] = useState([])
     const [user, setUser] = useState('')
-
-    const handleSymbolChange = (event, value) => {
-        if (value) setSymbolData(value.label)
-    }
-
-    const handleSymbolAdd = async () => {
-        addSymbol(symbolData, user.id).then(res => {
-            setSymbolList([...symbolList, res])
-        })
-    }
 
     useEffect(() => {
         const loggedUserJSON = window.localStorage.getItem('loggedUser')
         if (loggedUserJSON) {
             const user = JSON.parse(loggedUserJSON)
             setUser(user)
-
+            setToken(user.token)
             getSymbols(user.id).then(data => {
                 setSymbolList(data)
             })
         }
-
         getSymbolData().then(({ data }) => {
             const optionLabels = data.map(symbol => {
                 return {
@@ -55,6 +51,27 @@ export default function ActionList() {
         })
     }, [])
 
+    const handleSymbolChange = (event, value) => {
+        if (value) setSymbolData(value.label)
+    }
+    const handleSymbolAdd = async () => {
+        const response = await addSymbol(symbolData, user.id)
+
+        setSymbolList([...symbolList, response])
+
+        getSymbols(user.id).then(data => {
+            setSymbolList(data)
+        })
+
+        setSymbolData(null)
+    }
+    const handleSymbolDelete = id => {
+        deleteSymbol(id)
+
+        getSymbols(user.id).then(data => {
+            setSymbolList(data)
+        })
+    }
     return (
         <div className='action-container'>
             <div className='card'>
@@ -62,13 +79,16 @@ export default function ActionList() {
                     <span>Simbolo</span>
                     <Autocomplete
                         disablePortal
-                        id='combo-box-demo'
                         options={optionsData}
                         sx={{ width: 300 }}
                         renderInput={params => (
                             <TextField {...params} label='Simbolo' />
                         )}
                         onChange={handleSymbolChange}
+                        value={symbolData}
+                        isOptionEqualToValue={(option, value) => {
+                            return option.label === value
+                        }}
                     />
                     <Button variant='contained' onClick={handleSymbolAdd}>
                         Agregar Simbolo
@@ -86,34 +106,34 @@ export default function ActionList() {
                         </TableHead>
                         <TableBody>
                             {symbolList &&
-                                symbolList.map(symbol => (
-                                    <>
-                                        <TableRow key={symbol.id}>
-                                            <TableCell key={symbol.id}>
-                                                {symbol.Symbol}
+                                symbolList.map((symbol, index) => {
+                                    return (
+                                        <TableRow key={index}>
+                                            <TableCell>
+                                                <Link
+                                                    to={`/detalles/${symbol.Symbol}`}
+                                                >
+                                                    {symbol.Symbol}
+                                                </Link>
                                             </TableCell>
-                                            <TableCell key={symbol.id}>
-                                                {symbol.Name}
-                                            </TableCell>
-                                            <TableCell key={symbol.id}>
+                                            <TableCell>{symbol.Name}</TableCell>
+                                            <TableCell>
                                                 {symbol.Currency}
                                             </TableCell>
-                                            <TableCell key={symbol.id}>
+                                            <TableCell>
                                                 <IconButton
-                                                    key={symbol.id}
                                                     onClick={() =>
-                                                        console.log('test')
+                                                        handleSymbolDelete(
+                                                            symbol.Id
+                                                        )
                                                     }
                                                 >
-                                                    <DeleteIcon
-                                                        color='primary'
-                                                        key={symbol.id}
-                                                    ></DeleteIcon>
+                                                    <DeleteIcon color='primary'></DeleteIcon>
                                                 </IconButton>
                                             </TableCell>
                                         </TableRow>
-                                    </>
-                                ))}
+                                    )
+                                })}
                         </TableBody>
                     </Table>
                 </div>

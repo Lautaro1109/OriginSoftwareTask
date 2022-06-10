@@ -1,6 +1,7 @@
 import { Router } from 'express'
 
 import { connection } from '../database/db.js'
+import tokenVerify from '../middlewares/tokenVerify.js'
 
 const routes = Router()
 
@@ -21,19 +22,30 @@ routes.post('/symbols', (req, res) => {
     )
 })
 
-routes.post('/', async (req, res) => {
+routes.post('/', tokenVerify, (req, res) => {
     const { body } = req
+
     const { Symbol, Name, Currency, userId } = body
 
-    const insert = await connection.query(
-        ' INSERT INTO symbols (Symbol, Name, Currency, userId) VALUES (?, ?, ?, ?)',
+    const inserted = connection.query(
+        'INSERT INTO symbols (Symbol, Name, Currency, userId) VALUES (?, ?, ?, ?)',
         [Symbol, Name, Currency, userId],
-        (err, result) => {
-            if (err) res.send(err)
-        }
+        (err, result) => {}
     )
 
-    res.send(insert.values)
+    res.status(200).json(inserted.values)
+})
+
+routes.delete('/:id', tokenVerify, (req, res) => {
+    const { id } = req.params
+
+    connection.query(
+        'DELETE FROM symbols WHERE id = ?',
+        [id],
+        (err, result) => {}
+    )
+
+    res.send('Deleted')
 })
 
 export default routes

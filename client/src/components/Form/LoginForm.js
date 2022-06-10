@@ -51,7 +51,9 @@ export default function LoginForm({ handleLogin, children }) {
                         }
                     />
                 </div>
-                <button type='submit'>Ingresar</button>
+                <button type='submit' className='form-btn'>
+                    Ingresar
+                </button>
 
                 <p className='message'> {children} </p>
             </form>

@@ -12,12 +12,68 @@
 .card {
     width: 75%;
 }
-
+.card .btn-back {
+    width: 10%;
+}
 .detail-header-title {
     align-self: center;
+    display: flex;
+    justify-content: space-between;
 }
 
 .detail-action {
     display: flex;
     justify-content: space-between;
+    width: 100%;
+}
+.detail-action-data {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 40%;
+}
+.detail-action-data .detail-action-op {
+    font-size: 20px;
+    font-weight: 500;
+    margin: 2px 0 10px 0;
+}
+.detail-action-data span {
+    font-size: 17px;
+    color: #4a4a4a;
+    font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+}
+.first-date,
+.second-date,
+.select-label {
+    margin-bottom: 10px;
+}
+.detail-action-data .date-container {
+    margin: 5px 0;
+}
+.detail-action-select {
+    width: 55%;
+    margin: auto;
+}
+.select-c {
+    width: 30%;
+    margin-top: 10px;
+}
+.select-c span {
+    display: inline-block;
+}
+.select-c .select-t {
+    margin: 15px 0;
+    display: inline-block;
+    font-size: 18px;
+    font-weight: 500;
+    color: #4a4a4a;
+    font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+}
+
+.alert-message {
+    font-size: 17px;
+    font-weight: bold;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: red;
 }

@@ -1,9 +1,13 @@
 import { useEffect, useState } from 'react'
 
-import { Stack, AppBar, Toolbar, Typography } from '@mui/material'
+import { Stack, AppBar, Toolbar, Typography, Button } from '@mui/material'
+
+import { useNavigate } from 'react-router-dom'
 
 export default function Navbar() {
     const [user, setUser] = useState('')
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         const loggedUser = window.localStorage.getItem('loggedUser')
@@ -12,6 +16,14 @@ export default function Navbar() {
 
         setUser(name)
     }, [])
+
+    const handleLogout = () => {
+        window.localStorage.removeItem('loggedUser')
+
+        setTimeout(() => {
+            navigate('/')
+        }, 1500)
+    }
 
     return (
         <AppBar position='static'>
@@ -26,6 +38,19 @@ export default function Navbar() {
                         sx={{ flexGrow: 1 }}
                     >
                         {user.toUpperCase()}
+                    </Typography>
+                    <Typography
+                        variant='h6'
+                        component='div'
+                        sx={{ flexGrow: 1 }}
+                    >
+                        <Button
+                            variant='contained'
+                            color='primary'
+                            onClick={handleLogout}
+                        >
+                            Logout
+                        </Button>
                     </Typography>
                 </Stack>
             </Toolbar>

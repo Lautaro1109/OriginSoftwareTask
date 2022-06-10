@@ -23,13 +23,14 @@ import {
 } from '../../services/symbol'
 
 import DeleteIcon from '@mui/icons-material/Delete'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 export default function ActionList() {
     const [optionsData, setOptionsData] = useState([])
     const [symbolData, setSymbolData] = useState(null)
     const [symbolList, setSymbolList] = useState([])
     const [user, setUser] = useState('')
+    const [errorMessage, setErrorMessage] = useState('')
 
     useEffect(() => {
         const loggedUserJSON = window.localStorage.getItem('loggedUser')
@@ -55,15 +56,27 @@ export default function ActionList() {
         if (value) setSymbolData(value.label)
     }
     const handleSymbolAdd = async () => {
-        const response = await addSymbol(symbolData, user.id)
+        addSymbol(symbolData, user.id)
+            .then(data => {
+                setSymbolList([...symbolList, data])
 
-        setSymbolList([...symbolList, response])
+                getSymbols(user.id).then(data => {
+                    setSymbolList(data)
+                })
 
-        getSymbols(user.id).then(data => {
-            setSymbolList(data)
-        })
+                setSymbolData(null)
+            })
+            .catch(err => {
+                setErrorMessage(
+                    'Ese simbolo ya existe, porfavor intente con otro.'
+                )
 
-        setSymbolData(null)
+                setTimeout(() => {
+                    setErrorMessage('')
+                }, 2000)
+            })
+
+        //
     }
     const handleSymbolDelete = id => {
         deleteSymbol(id)
@@ -72,6 +85,7 @@ export default function ActionList() {
             setSymbolList(data)
         })
     }
+
     return (
         <div className='action-container'>
             <div className='card'>
@@ -110,11 +124,15 @@ export default function ActionList() {
                                     return (
                                         <TableRow key={index}>
                                             <TableCell>
-                                                <Link
+                                                <NavLink
                                                     to={`/detalles/${symbol.Symbol}`}
+                                                    state={{
+                                                        symbol: symbol.Symbol,
+                                                        userId: user.id
+                                                    }}
                                                 >
                                                     {symbol.Symbol}
-                                                </Link>
+                                                </NavLink>
                                             </TableCell>
                                             <TableCell>{symbol.Name}</TableCell>
                                             <TableCell>
@@ -136,6 +154,9 @@ export default function ActionList() {
                                 })}
                         </TableBody>
                     </Table>
+                    {errorMessage && (
+                        <p className='error-message'>{errorMessage}</p>
+                    )}
                 </div>
             </div>
         </div>

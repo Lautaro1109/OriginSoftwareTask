@@ -1,6 +1,9 @@
-import jwt, { decode } from 'jsonwebtoken'
+import jwt from 'jsonwebtoken'
 
-const tokenVerify = (req, res, next) => {
+import { connection } from '../database/db.js'
+
+//Verifica la auth
+const tokenVerify = async (req, res, next) => {
     const authorization = req.get('authorization')
     let token = null
 
@@ -15,11 +18,27 @@ const tokenVerify = (req, res, next) => {
 
     if (!token || !decodeToken.id) {
         return res.status(401).json({
-            error: 'token is missing or invalid'
+            error: 'Falta el token o es invalido'
         })
     }
 
-    next()
+    //Ademas verifica que no haya otro registro igual
+
+    const { Symbol, userId } = req.body
+
+    connection.query(`SELECT * FROM symbols`, (err, rows) => {
+        const symbols = JSON.parse(JSON.stringify(rows))
+        const symbol = symbols.find(symbol => {
+            return symbol.Symbol === Symbol && symbol.userId === userId
+        })
+
+        if (symbol) {
+            return res.status(400).json({
+                error: 'Este simbolo ya existe'
+            })
+        }
+        next()
+    })
 }
 
 export default tokenVerify

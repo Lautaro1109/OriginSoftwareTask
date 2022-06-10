@@ -33,6 +33,14 @@ Los primeros pasos a realizar para ver funcional el proyecto deberian ser:
 "password" : "passwordtest"
 }
 
+-   En caso de no requerir la creacion de un usuario, ya hay un usuario creado dentro de la base de datos.
+
+Usuario : originsoftware
+
+Contraseña: origin2022
+
+Porfavor, respetar "Case sensitivity". (Escribir tal cual esta presentado el usuario y la contraseña)
+
 ## Acciones
 
 Luego de realizar esto ya podremos ingresar a nuestra plataforma de "Mis Acciones" mediante nuestro usuario y poder visualizar la lista de nuestras acciones.
@@ -42,3 +50,9 @@ Ademas, podemos ir seleccionando nuestras acciones preferidas y agregarlas a nue
 ## Detalles de accion
 
 Si queremos visualizar las cotizaciones de nuestras acciones preferidas unicamente deberiamos presionar sobre su nombre y esto nos llevara a una vista donde vamos a poder manejar un grafico que nos devuelva los datos que necesitamos.
+
+### Grafico y Filtros de fecha
+
+En las opciones vamos a poder seleccionar entre tiempo real o un filtro historico de fechas, ademas de ser obligatorio el tener que agregar el intervalo de tiempo que necesitamos.
+
+Luego de seleccionar nuestros datos, podemos continuar con el boton graficar y vamos a tener nuestro grafico disponible para poder visualizar las metricas de cotizacion.

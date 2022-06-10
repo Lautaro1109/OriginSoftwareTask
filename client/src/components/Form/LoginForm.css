@@ -41,7 +41,7 @@ form label {
     margin-top: 15px;
 }
 
-button {
+.form-btn {
     width: 100%;
     height: 40px;
     border: 1px solid #ccc;

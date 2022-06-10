@@ -21,7 +21,7 @@ export default function Home() {
             setUser(user)
             navigate('/acciones')
         }
-    }, [])
+    }, [navigate])
 
     const handleLogin = async (username, password) => {
         try {

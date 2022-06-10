@@ -1,6 +1,5 @@
 import { Router } from 'express'
 
-import mysql from 'mysql'
 import { connection } from '../database/db.js'
 
 import bcrypt from 'bcrypt'
@@ -33,7 +32,7 @@ routes.post('/', async (req, res) => {
             )
 
             if (!(userData && passwordCorrect)) {
-                res.status(401).json({
+                return res.status(401).json({
                     error: 'invalid user or password'
                 })
             }

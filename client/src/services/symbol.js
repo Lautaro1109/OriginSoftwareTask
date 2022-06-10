@@ -10,7 +10,7 @@ export const getSymbolData = () => {
     return axios
         .get(process.env.REACT_APP_SYMBOLS_URL)
         .then(res => res.data)
-        .catch(err => console.log(err))
+        .catch(err => err)
 }
 
 export const addSymbol = async (symbolData, userId) => {

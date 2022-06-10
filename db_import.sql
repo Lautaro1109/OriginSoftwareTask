@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 10, 2022 at 09:12 PM
+-- Generation Time: Jun 11, 2022 at 12:39 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -31,6 +31,7 @@ CREATE TABLE `symbols` (
   `Id` int(200) NOT NULL,
   `Name` varchar(250) NOT NULL,
   `Symbol` varchar(100) NOT NULL,
+  `Currency` varchar(200) NOT NULL,
   `userId` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -85,7 +86,7 @@ ALTER TABLE `symbols`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables

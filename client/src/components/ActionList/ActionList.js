@@ -128,7 +128,10 @@ export default function ActionList() {
                                                     to={`/detalles/${symbol.Symbol}`}
                                                     state={{
                                                         symbol: symbol.Symbol,
-                                                        userId: user.id
+                                                        userId: user.id,
+                                                        Name: symbol.Name,
+                                                        Currency:
+                                                            symbol.Currency
                                                     }}
                                                 >
                                                     {symbol.Symbol}

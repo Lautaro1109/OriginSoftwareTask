@@ -43,11 +43,7 @@ export default function Detail() {
     const [seeChart, setSeeChart] = useState(false)
 
     useEffect(() => {
-        getSymbols(state.userId).then(data => {
-            setActionName(
-                `${data[0].Symbol} - ${data[0].Name} - ${data[0].Currency}`
-            )
-        })
+        setActionName(`${id} - ${state.Name} - ${state.Currency}`)
     })
 
     const handleTimeChange = () => {
@@ -108,7 +104,10 @@ export default function Detail() {
                     <Button
                         className='btn-back'
                         variant='outlined'
-                        onClick={() => navigate('/')}
+                        onClick={() => {
+                            setActionName('')
+                            navigate('/')
+                        }}
                     >
                         {'<'} Volver
                     </Button>
